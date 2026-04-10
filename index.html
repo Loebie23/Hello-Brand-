@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hello Brand Platform</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: #111827;
+      --panel-2: #1f2937;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #38bdf8;
+      --ok: #22c55e;
+      --danger: #ef4444;
+      --radius: 14px;
+      --shadow: 0 10px 25px rgba(0, 0, 0, 0.28);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+    body {
+      color: var(--text);
+      background: linear-gradient(180deg, #020617, var(--bg));
+      min-height: 100dvh;
+    }
+
+    .container {
+      width: min(1160px, calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(8px);
+      background: rgba(2, 6, 23, 0.75);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+    }
+
+    .nav {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem 0;
+    }
+
+    .brand {
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    .brand-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 9px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(45deg, #0284c7, #22d3ee);
+      color: #020617;
+      font-weight: 900;
+      font-size: 0.9rem;
+    }
+
+    .actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: end;
+    }
+
+    input, button, select {
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      background: var(--panel);
+      color: var(--text);
+      border-radius: 12px;
+      height: 40px;
+      padding: 0 0.75rem;
+      font: inherit;
+    }
+
+    input, select { min-width: 0; }
+    input:focus, button:focus, select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+    button {
+      cursor: pointer;
+      transition: transform 0.16s ease, background 0.16s ease;
+    }
+    button:hover { transform: translateY(-1px); background: #0b1220; }
+
+    .hero {
+      display: grid;
+      gap: 1rem;
+      margin: 1.4rem 0;
+      background: radial-gradient(circle at top right, rgba(34, 211, 238, 0.22), transparent 50%), var(--panel);
+      border: 1px solid rgba(148, 163, 184, 0.22);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      padding: clamp(1rem, 2vw, 1.6rem);
+    }
+
+    .hero h1 { margin: 0; font-size: clamp(1.3rem, 3vw, 2.1rem); }
+    .hero p { margin: 0; color: var(--muted); line-height: 1.4; }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+
+    .stat {
+      background: var(--panel-2);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 12px;
+      padding: 0.7rem;
+      text-align: center;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.2rem;
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 0.75rem;
+      margin: 0.8rem 0 1.1rem;
+    }
+
+    #catalog {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.85rem;
+      padding-bottom: 2rem;
+    }
+
+    .card {
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--panel);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-rows: auto 1fr;
+      min-height: 280px;
+    }
+
+    .media {
+      position: relative;
+      background: #0b1220;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+    }
+
+    .media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .media .status {
+      position: absolute;
+      left: 0.5rem;
+      bottom: 0.5rem;
+      background: rgba(2, 6, 23, 0.8);
+      color: var(--muted);
+      font-size: 0.72rem;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      border-radius: 999px;
+      padding: 0.2rem 0.5rem;
+    }
+
+    .content { padding: 0.75rem; display: grid; gap: 0.35rem; }
+    .title { margin: 0; font-size: 1rem; }
+    .meta { color: var(--muted); font-size: 0.88rem; }
+    .pill {
+      justify-self: start;
+      background: rgba(56, 189, 248, 0.14);
+      color: #7dd3fc;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 999px;
+      padding: 0.2rem 0.55rem;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      border: 1px dashed rgba(148, 163, 184, 0.35);
+      border-radius: var(--radius);
+      padding: 1.2rem;
+      grid-column: 1 / -1;
+    }
+
+    @media (max-width: 1024px) {
+      #catalog { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 820px) {
+      .nav { grid-template-columns: 1fr; }
+      .actions { justify-content: start; }
+      .toolbar {
+        grid-template-columns: 1fr 1fr;
+      }
+      .toolbar #search { grid-column: 1 / -1; }
+      #catalog { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .stats { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 520px) {
+      .container { width: min(1160px, calc(100% - 1rem)); }
+      .hero { margin-top: 0.8rem; }
+      .toolbar { grid-template-columns: 1fr; }
+      #catalog { grid-template-columns: 1fr; gap: 0.75rem; }
+      input, button, select { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="brand-badge">HB</div>
+        <span>Hello Brand Platform</span>
+      </div>
+      <div class="actions">
+        <button id="resetFilters" type="button">Reset Filters</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Unified Catalog (Desktop + Mobile Safe)</h1>
+      <p>
+        Drive images are loaded with <code>drive.google.com/thumbnail?id=...&amp;sz=w800</code> first,
+        then gracefully fallback to <code>uc?export=view</code> if needed.
+      </p>
+      <div class="stats">
+        <div class="stat"><strong id="statTotal">0</strong><span>Total items</span></div>
+        <div class="stat"><strong id="statVisible">0</strong><span>Visible</span></div>
+        <div class="stat"><strong id="statFailed">0</strong><span>Image failures</span></div>
+      </div>
+    </section>
+
+    <section class="toolbar">
+      <input id="search" type="search" placeholder="Search name or category" aria-label="Search" />
+      <select id="categoryFilter" aria-label="Filter by category"></select>
+      <select id="sortBy" aria-label="Sort products">
+        <option value="name">Sort: Name</option>
+        <option value="category">Sort: Category</option>
+      </select>
+    </section>
+
+    <section id="catalog" aria-live="polite"></section>
+  </main>
+
+  <script>
+    const rawCatalog = [
+      { name: 'Starter Tee', category: 'Apparel', driveId: '1A2B3C4D5E6F' },
+      { name: 'Travel Bottle', category: 'Accessories', driveId: '1B2C3D4E5F6G' },
+      { name: 'Desk Mat', category: 'Office', driveId: '1C2D3E4F5G6H' },
+      { name: 'Icon Stickers', category: 'Print', driveId: '1D2E3F4G5H6I' },
+      { name: 'Canvas Tote', category: 'Apparel', driveId: '1E2F3G4H5I6J' },
+      { name: 'Notebook Set', category: 'Office', driveId: '1F2G3H4I5J6K' },
+      { name: 'Enamel Mug', category: 'Accessories', driveId: '1G2H3I4J5K6L' },
+      { name: 'Poster Pack', category: 'Print', driveId: '1H2I3J4K5L6M' }
+    ];
+
+    const state = {
+      search: '',
+      category: 'All',
+      sortBy: 'name',
+      failedImages: 0
+    };
+
+    const dom = {
+      catalog: document.getElementById('catalog'),
+      search: document.getElementById('search'),
+      categoryFilter: document.getElementById('categoryFilter'),
+      sortBy: document.getElementById('sortBy'),
+      statTotal: document.getElementById('statTotal'),
+      statVisible: document.getElementById('statVisible'),
+      statFailed: document.getElementById('statFailed'),
+      resetFilters: document.getElementById('resetFilters')
+    };
+
+    function extractDriveId(value) {
+      if (!value) return '';
+      if (/^[\w-]{10,}$/.test(value)) return value;
+      const fromIdQuery = value.match(/[?&]id=([\w-]+)/);
+      if (fromIdQuery) return fromIdQuery[1];
+      const fromPath = value.match(/\/d\/([\w-]+)/);
+      if (fromPath) return fromPath[1];
+      const fromThumbnail = value.match(/thumbnail\?id=([\w-]+)/);
+      if (fromThumbnail) return fromThumbnail[1];
+      return '';
+    }
+
+    function buildDriveUrls(source) {
+      const id = extractDriveId(source);
+      if (!id) return { primary: '', fallback: '' };
+      return {
+        primary: `https://drive.google.com/thumbnail?id=${id}&sz=w800`,
+        fallback: `https://drive.google.com/uc?export=view&id=${id}`
+      };
+    }
+
+    function normalizeItem(item, index) {
+      const urls = buildDriveUrls(item.driveId || item.image || '');
+      return {
+        ...item,
+        _idx: index,
+        primaryUrl: urls.primary,
+        fallbackUrl: urls.fallback
+      };
+    }
+
+    const catalogData = rawCatalog.map(normalizeItem);
+
+    function populateCategoryFilter(data) {
+      const categories = ['All', ...new Set(data.map(item => item.category))];
+      dom.categoryFilter.innerHTML = categories.map(c => `<option value="${c}">${c}</option>`).join('');
+    }
+
+    function getFilteredData() {
+      const q = state.search.trim().toLowerCase();
+      return catalogData
+        .filter(item => state.category === 'All' || item.category === state.category)
+        .filter(item => {
+          if (!q) return true;
+          return item.name.toLowerCase().includes(q) || item.category.toLowerCase().includes(q);
+        })
+        .sort((a, b) => a[state.sortBy].localeCompare(b[state.sortBy]));
+    }
+
+    function createCard(item) {
+      return `
+        <article class="card">
+          <div class="media">
+            <img
+              src="${item.primaryUrl}"
+              alt="${item.name}"
+              loading="lazy"
+              referrerpolicy="no-referrer"
+              crossorigin="anonymous"
+              data-primary="${item.primaryUrl}"
+              data-fallback="${item.fallbackUrl}"
+              data-stage="0"
+            />
+            <span class="status">Primary URL</span>
+          </div>
+          <div class="content">
+            <span class="pill">${item.category}</span>
+            <h2 class="title">${item.name}</h2>
+            <div class="meta">Drive ID: ${extractDriveId(item.driveId)}</div>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderCatalog() {
+      const visible = getFilteredData();
+      dom.catalog.innerHTML = visible.length
+        ? visible.map(createCard).join('')
+        : `<div class="empty">No items match your filters.</div>`;
+
+      dom.statTotal.textContent = String(catalogData.length);
+      dom.statVisible.textContent = String(visible.length);
+      dom.statFailed.textContent = String(state.failedImages);
+
+      wireImageFallbacks();
+    }
+
+    function markImageStatus(img, text) {
+      const status = img.closest('.media')?.querySelector('.status');
+      if (status) status.textContent = text;
+    }
+
+    function wireImageFallbacks() {
+      const images = dom.catalog.querySelectorAll('img[data-stage]');
+      images.forEach(img => {
+        img.addEventListener('error', () => {
+          const stage = Number(img.dataset.stage || 0);
+          if (stage === 0 && img.dataset.fallback) {
+            img.dataset.stage = '1';
+            img.src = img.dataset.fallback;
+            markImageStatus(img, 'Fallback URL');
+            return;
+          }
+          img.dataset.stage = '2';
+          state.failedImages += 1;
+          img.alt = `${img.alt} (image unavailable)`;
+          img.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+            `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300"><rect width="100%" height="100%" fill="#111827"/><text x="50%" y="50%" fill="#e5e7eb" font-size="16" text-anchor="middle" dominant-baseline="middle">Image unavailable</text></svg>`
+          );
+          markImageStatus(img, 'Unavailable');
+          dom.statFailed.textContent = String(state.failedImages);
+        }, { once: false });
+
+        img.addEventListener('load', () => {
+          const stage = Number(img.dataset.stage || 0);
+          if (stage === 0) markImageStatus(img, 'Primary URL');
+          if (stage === 1) markImageStatus(img, 'Fallback URL loaded');
+        }, { once: false });
+      });
+    }
+
+    function attachEvents() {
+      dom.search.addEventListener('input', () => {
+        state.search = dom.search.value;
+        renderCatalog();
+      });
+
+      dom.categoryFilter.addEventListener('change', () => {
+        state.category = dom.categoryFilter.value;
+        renderCatalog();
+      });
+
+      dom.sortBy.addEventListener('change', () => {
+        state.sortBy = dom.sortBy.value;
+        renderCatalog();
+      });
+
+      dom.resetFilters.addEventListener('click', () => {
+        state.search = '';
+        state.category = 'All';
+        state.sortBy = 'name';
+        dom.search.value = '';
+        dom.categoryFilter.value = 'All';
+        dom.sortBy.value = 'name';
+        renderCatalog();
+      });
+    }
+
+    function init() {
+      populateCategoryFilter(catalogData);
+      attachEvents();
+      renderCatalog();
+    }
+
+    init();
+  </script>
+</body>
+</html>
